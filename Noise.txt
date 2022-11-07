@@ -1,0 +1,76 @@
+>>11/4
+많은 옥타브로 인한 주파수의 증감이 일관된 노이즈를 자연현상과
+유사하게 만드는 프랙탈 모양을 생성하게 한다.
+프랙탈 : 일부 작은 조각이 전체와 비슷한 기하학적 형태
+불규칙해 보이는 현상을 배후에서 지배하는 규칙을 찾아낸다.
+잡음 ( Noise ) : 넓은 의미로 신호간섭을 비롯한 의도하지 않은
+입력 신호의 왜곡
+
+Perlin Noise HeightMap (https://blog.naver.com/dj3630/221512874599)
+켄 펄린이 만든 컴퓨터효과를 위한 단계적 텍서처를 만들려고 개발한
+노이즈 함수. 불규칙한 노이즈를 CG로 표현하는 방법. 이상적인 노이즈
+의사난수(pseudo random) : 같은 값을 전달하면 항상 같은 결과값을 반환
+하기에 완전한 랜덤은 아니지만 매번 다른 값을 전달하면 랜덤에 가까운 값을
+반환한다는 뜻
+일관적인(coherent) : 생성된 노이즈 공간의 어떠한 두 점도
+서로 연속성을 띠고 있기에 부드럽게 이어진다. 
+단절(discontinuity)이 일어나는 구간이 없다.
+노이즈함수 : 시드 값에 기반한 난수생성기.
+펄린 노이즈 함수는 여러 개의 보간된 노이즈 함수를 하나로 합친것
+옥타브 : 하나로 합치기 위해 사용되는 각각의 연속적인 노이즈 함수
+음악의 옥타브처럼 각각의 노이즈 함수가 이전의 것보다 두 배의 주파수를 갖음
+옥타브 주파수가 너무 높으면 작은 디테일 표시하기에 픽셀이 부족해짐
+지속성(persistence) : 진폭의 변화 정도
+이 값을 바꾸면 다양한 특징의 펄린 노이즈가 생성된다.
+지속성 값이 높으면 주기가 긴 옥타브의 영향력이 커진다.
+
+Octaves - 각각 소음 레이어들을 뜻함
+Lacunarity - 옥타브의 주파수 증가 조절
+        프랙탈이 공간을 채우는 방법을 나타내는 기하학 전문용어
+Persistence - 각 옥타브의 진폭 감소 제어
+
+Unity > Mathf.PerinNoise(flaot x, float y);
+펄린 노이즈는 정수 좌표의 경우 항상 같은 값을 반환
+
+Noise 스크립트
+static Monobehaviour 상속 안함.
+0과 1 사이의 그리드 값을 같게 함. 2차원 배열 생성.
+public static float[,]
+GenerateNoiseMap(지도폭, 높이, flaot 스케일) 함수
+세 개의 매개변수(int int float)를 받아서 최소 0.0001f의 스케일
+지도의 값을 scale로 나누어 PerlinNoise가 적용된  noisMap을 반환
+
+MapGenerator ( Generator스크립트, MapDisplay스크립트 )
+Generator 스크립트
+지금은 MapDisplay에 전달하여 화면에 노이즈 맵을 그린다.
+나중에 noiseMap을 처리하고 이를 지형으로 변환하는 모든 종류의
+방법이 있다.
+
+MapDisplay(Renderer) 스크립트
+DrowNoiseMap(float[,] noiseMap) >Noise스크립트에 noiseMap리턴호출
+C# .GetLength(n) : n차원 배열의 크기값
+텍스트렌더러로 texture.SetPixel로 해당픽셀에 값을 넣는방법
+모든 픽셀에 색상을 입히는 방법 o
+2차원 배열인 NoiseMap에 1차원 배열 Color(width와 height곱한)의
+y에 맵의 너비를 곱하여 행에 해당하는 인덱스를 얻음.
+x를 더하면 열에 대한 인덱스 값을 얻을 수 있음.
+2중 for y<height, x<width.
+colorMap [y * width + x] = Color.Lerp(Color.black, Color.white, noiseMap[x, y]);
+
+public static Color Lerp(Color a, Color b, float t)
+a, b 색깔 사이의 t(0~1) 비율에 위치한 색 리턴
+
+텍스처 값을 복사하여 미리보기 생성
+>> MapGenerateor에서 Mapdisplay의 noiseMap을 호출
+>> 제너레이터 메소드를 Editor로 버튼을 만들어 사용
+
+E03 Octaves
+Noise 스크립트
+매개변수 추가
+옥타브(octaves), 지속성(persistance), lacunarity
+
+3중 for문 옥타브 작성
+3중 for문에 작성
+진폭(amplitude)
+주파수(frequency)
+노이즈폭(noiseHeight)
