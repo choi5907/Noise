@@ -199,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 1209577687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -248,10 +248,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ea6571bc2fff64f86214778a1b8b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawMode: 1
   mapWidth: 100
   mapHeight: 100
-  noiseScale: 0.3
-  autoUpdate: 0
+  noiseScale: 18.4
+  octaves: 4
+  persistance: 0.523
+  lacunarity: 2
+  seed: 16
+  offset: {x: 6.48, y: 11.24}
+  autoUpdate: 1
+  regions:
+  - name: Water
+    height: 0.4
+    colors: {r: 0.3537736, g: 0.8066328, b: 1, a: 0}
+  - name: Glass
+    height: 1
+    colors: {r: 0.11230793, g: 0.6320754, b: 0, a: 0}
 --- !u!114 &1765807608
 MonoBehaviour:
   m_ObjectHideFlags: 0

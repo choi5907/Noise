@@ -1,0 +1,16 @@
+지형 지물 생성
+- MapGenerator
+struct TerrainType{ 이름 높이 색 }
+지형 생성
+
+MapDisplay의 구현부를 이동
+- TextureGenerator
+Texture2D의 생성부분과 ColorMap의 구현부를 static으로 생성
+Texture 생성부분 제거
+
+텍스처의 WrapMode를 만들어 저장
+(Repeat/반복-타일링, Clamp/단일-매핑)
+
+다른 영역을 침범하지 않게끔 한다.
+- TextureGenerator
+텍스처 필터모드 설정 (필터링x, 필터링, 구간 필터링)
